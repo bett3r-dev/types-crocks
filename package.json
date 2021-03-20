@@ -1,4 +1,5 @@
 {
     "name": "@types/crocks",
+    "version": "0.12.3",
     "private": true
 }
