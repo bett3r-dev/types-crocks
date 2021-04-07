@@ -1,29 +1,41 @@
-import { NodeCallback, NullaryFunction, UnaryFunction, VariadicFunction } from '../internal/index';
+import { NodeCallback, NullaryFunction, /* UnaryFunction, */ VariadicFunction } from '../internal/index';
 
-declare function Async(fn: (reject: UnaryFunction, resolve: UnaryFunction) => any): Async;
+export type UnaryFunction<V = any, R=V> = (arg: V) => R;
 
-declare class Async {
-    map(fn: UnaryFunction): Async;
-    alt(val: Async): Async;
-    bimap(fn1: UnaryFunction, fn2: UnaryFunction): Async;
-    ap(val: Async): Async;
-    chain(fn: UnaryFunction<Async>): Async;
-    coalesce(fn1: UnaryFunction, fn2: UnaryFunction): Async;
-    bichain(fn1: UnaryFunction<Async>, fn2: UnaryFunction<Async>): Async;
-    swap(fn1: UnaryFunction, fn2: UnaryFunction): Async;
-    race(val: Async): Async;
-    fork(reject: UnaryFunction, resolve: UnaryFunction): any;
-    fork(reject: UnaryFunction, resolve: UnaryFunction, cancel: NullaryFunction): any;
-    toPromise(): Promise<any>;
+declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => R): Async<L,R>;
+
+declare interface Functor<T>{
+    map(fn: (arg: T)=>T): Functor<T>;
+}
+declare interface Monad<T>{
+    chain(fn: (arg: T)=>Monad<T>): Monad<T>;
+}
+declare interface Applicative<T>{
+    ap(val: Applicative<T>): Applicative<T>;
+}
+
+declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
+    map<R = Right>(fn: UnaryFunction<R>): Async<Left,R>;
+    chain<R= Right>(fn: UnaryFunction<R, Async<Left,R>>): Async<Left,R>;
+    ap<R= Right>(val: Async<Left,R>): Async<Left,R>;
+    alt<L = Left,R = Right>(val: Async<L,R>): Async<L,R>;
+    bimap<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<L,R>;
+    coalesce<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R,R>;
+    bichain<L= Left, R= Right>(fn1: UnaryFunction<Async<L,R>>, fn2: UnaryFunction<Async<L,R>>): Async<L,R>;
+    swap<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R,L>;
+    race<L= Left, R= Right>(val: Async<L,R>): Async<L,R>;
+    fork<L= Left, R= Right>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>): any;
+    fork<L= Left, R= Right>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>, cancel: NullaryFunction): any;
+    toPromise<R = Right>(): Promise<R>;
     valueOf(): boolean;
-    static fromPromise(fn: VariadicFunction<Promise<any>>): VariadicFunction<Async>;
-    static fromNode(fn: VariadicFunction<NodeCallback<any>>): VariadicFunction<Async>;
-    static all(val: Async[]): Async;
-    static resolveAfter(delay: number, val: unknown): Async;
-    static rejectAfter(delay: number, val: unknown): Async;
-    static of(val: unknown): Async;
-    static Rejected(val: unknown): Async;
-    static Resolved(val: unknown): Async;
+    static fromPromise<L=any,R=any>(fn: VariadicFunction<Promise<R>>): VariadicFunction<Async<L,R>>;
+    static fromNode<L=any,R=any>(fn: VariadicFunction<NodeCallback<R>>): VariadicFunction<Async<L,R>>;
+    static all<L=any,R=any>(val: Async<L,R>[]): Async<L,R>;
+    static resolveAfter<L=any,R=any>(delay: number, val: unknown): Async<L,R>;
+    static rejectAfter<L=any,R=any>(delay: number, val: unknown): Async<L,R>;
+    static of<L=any,R=any>(val: unknown): Async<L,R>;
+    static Rejected<L=any,R=any>(val: L): Async<L,R>;
+    static Resolved<R>(val: R): Async<any,R>;
 }
 
 export default Async;
