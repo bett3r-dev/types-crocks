@@ -1,27 +1,30 @@
-import { UnaryFunction } from '../internal/index';
-import Left from './Left';
-import Right from './Right';
+import {
+    UnaryFunction,
+    Functor,
+    Monad,
+    Applicative
+} from '../internal/index';
 
-declare function Either(val: any): Either;
+declare function Either<Left, Right>(val: Right): Either<Left,Right>;
 
-declare class Either {
-    equals(val: unknown): boolean;
-    concat(val: Either): Either;
-    map(fn: UnaryFunction): Either;
-    alt(val: Either): Either;
-    bimap(fn1: UnaryFunction, fn2: UnaryFunction): Either;
-    ap(val: Either): Either;
-    sequence(val: unknown): any;
-    traverse(val: unknown): any;
-    chain(fn: UnaryFunction<Either>): Either;
-    coalesce(fn1: UnaryFunction, fn2: UnaryFunction): Either;
-    bichain(fn1: UnaryFunction<Either>, fn2: UnaryFunction<Either>): Either;
-    swap(fn1: UnaryFunction<Either>, fn2: UnaryFunction<Either>): Either;
-    either(fn1: UnaryFunction, fn2: UnaryFunction): any;
-    valueOf(): any;
-    static of(val: unknown): Either;
-    static Left(val: unknown): Either;
-    static Right(val: unknown): Either;
+declare class Either<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right>  {
+    map<R = Right>(fn: UnaryFunction<R>): Either<Left,R>;
+    chain<R= Right>(fn: UnaryFunction<R, Either<Left,R>>): Either<Left,R>;
+    ap<R= Right>(val: Either<Left,R>): Either<Left,R>;
+    equals<R=Right>(val: R): boolean;
+    concat<R=Right>(other: Either<Left, R>): Either<Left, R>;
+    alt<R=Right>(other: Either<Left, R>): Either<Left, R>;
+    bimap<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Either<L,R>;
+    sequence(val: unknown): any;//TODO: Completar el tipo aca
+    traverse(val: unknown): any;//TODO: Completar el tipo aca
+    coalesce<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Either<L,R>;
+    bichain<L=Left, R=Right>(fn1: UnaryFunction<L, Either<L,R>>, fn2: UnaryFunction<R, Either<L,R>>): Either<L,R>;
+    swap<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Either<L,R>;
+    either<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): any;
+    valueOf<R=Right>(): R;
+    static of<L,R=L>(val: R): Either<L, R>;
+    static Left<L,R=any>(val: L): Either<L, R>;
+    static Right<L,R=L>(val: R): Either<L, R>;
 }
 
 export default Either;
