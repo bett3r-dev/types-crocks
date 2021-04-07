@@ -1,18 +1,14 @@
-import { NodeCallback, NullaryFunction, /* UnaryFunction, */ VariadicFunction } from '../internal/index';
-
-export type UnaryFunction<V = any, R=V> = (arg: V) => R;
+import {
+    NodeCallback,
+    NullaryFunction,
+    UnaryFunction,
+    VariadicFunction,
+    Functor,
+    Monad,
+    Applicative
+} from '../internal/index';
 
 declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => R): Async<L,R>;
-
-declare interface Functor<T>{
-    map(fn: (arg: T)=>T): Functor<T>;
-}
-declare interface Monad<T>{
-    chain(fn: (arg: T)=>Monad<T>): Monad<T>;
-}
-declare interface Applicative<T>{
-    ap(val: Applicative<T>): Applicative<T>;
-}
 
 declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
     map<R = Right>(fn: UnaryFunction<R>): Async<Left,R>;
