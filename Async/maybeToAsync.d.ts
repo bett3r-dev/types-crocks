@@ -6,9 +6,11 @@ import Async from './Async';
  * maybeToAsync :: e -> Maybe a -> Async e a
  * maybeToAsync :: e -> (a -> Maybe b) -> a -> Async e b
  */
-declare function maybeToAsync(errVal: any): (maybe: Maybe) => Async;
-declare function maybeToAsync(errVal: any, maybe: Maybe): Async;
-declare function maybeToAsync(fn: UnaryFunction<Maybe>): (maybe: Maybe) => UnaryFunction<Async>;
-declare function maybeToAsync(fn: UnaryFunction<Maybe>, maybe: Maybe): UnaryFunction<Async>;
+declare function maybeToAsync<L,R>(errVal: L): (maybe: Maybe<R>) => Async<L,R>;
+declare function maybeToAsync<L,R>(errVal: L, maybe: Maybe<R>): Async<L,R>;
+//TODO: Test this function
+declare function maybeToAsync<L,R>(fn: UnaryFunction<Maybe<R>>): (maybe: Maybe<R>) => UnaryFunction<Async<L,R>>;
+//TODO: Test this function
+declare function maybeToAsync<L,R>(fn: UnaryFunction<Maybe<R>>, maybe: Maybe<R>): UnaryFunction<Async<L,R>>;
 
 export default maybeToAsync;
