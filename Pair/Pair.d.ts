@@ -1,22 +1,28 @@
-import { BinaryFunction, UnaryFunction } from '../internal/index';
+import {
+    BinaryFunction,
+    UnaryFunction,
+    Functor,
+    Monad,
+    Applicative
+} from '../internal/index';
 
-declare function Pair(val1: unknown, val2: unknown): Pair;
+declare function Pair<F,S>(val1: F, val2: S): Pair<F,S>;
 
-declare class Pair {
-    equals(val: unknown): boolean;
-    concat(val: Pair): Pair;
-    map(fn: UnaryFunction): Pair;
-    bimap(fn1: UnaryFunction, fn2: UnaryFunction): Pair;
-    ap(val: Pair): Pair;
-    chain(fn: (val: unknown) => Pair): Pair;
-    sequence(val: unknown): any;
-    traverse(val: unknown): any;
-    extend(fn: (val: Pair) => any): Pair;
-    swap(fn1: UnaryFunction, fn2: UnaryFunction): Pair;
-    fst(): any;
-    snd(): any;
-    toArray(): [any, any];
-    merge(fn: BinaryFunction): any;
+declare class Pair<First,Second> implements Functor<Second>, Monad<Second>, Applicative<Second> {
+    map<S=Second>(fn: UnaryFunction<S>): Pair<First,S>;
+    chain<S=Second>(fn: (val: S) => Pair<First,S>): Pair<First,S>;
+    ap<S=Second>(val: Pair<First, S>): Pair<First, S>;
+    equals<S=Second>(val: S): boolean;
+    concat<F=First,S=Second>(val: Pair<F,S>): Pair<F,S>;
+    bimap<F=First, S=Second>(fn1: UnaryFunction<F>, fn2: UnaryFunction<S>): Pair<F,S>;
+    sequence(val: unknown): any; //TODO: Completar el tipo aca
+    traverse(val: unknown): any; //TODO: Completar el tipo aca
+    extend<S=Second>(fn: (val: Pair<First,S>) => S): Pair<First,S>;
+    swap<F=First,S=Second>(fn1: UnaryFunction<F>, fn2: UnaryFunction<S>): Pair<F,S>;
+    fst<F=First>(): F;
+    snd<S=Second>(): S;
+    toArray<F,S>(): [F, S];
+    merge<F,S>(fn: BinaryFunction<any>): any;
 }
 
 export default Pair;

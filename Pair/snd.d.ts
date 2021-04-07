@@ -3,6 +3,6 @@ import Pair from './Pair';
 /**
  * snd :: Pair a b -> b
  */
-declare function snd(val: Pair): any;
+declare function snd<S>(val: Pair<any, S>): S;
 
 export default snd;
