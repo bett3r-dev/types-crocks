@@ -6,7 +6,8 @@ import Maybe from './Maybe';
  * eitherToMaybe :: Either b a -> Maybe a
  * eitherToMaybe :: (a -> Either c b) -> a -> Maybe b
  */
-declare function eitherToMaybe(val: Either): Maybe;
-declare function eitherToMaybe(fn: UnaryFunction<Either>): UnaryFunction<Maybe>;
+declare function eitherToMaybe<L,R>(val: Either<L,R>): Maybe<R>;
+//TODO: Test this function
+declare function eitherToMaybe<L,R>(fn: UnaryFunction<Either<L,R>>): UnaryFunction<Maybe<R>>;
 
 export default eitherToMaybe;

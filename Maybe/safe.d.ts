@@ -5,7 +5,8 @@ import Maybe from './Maybe';
 /**
  * safe :: ((b -> Boolean) | Pred) -> b -> Maybe a
  */
-declare function safe(pred: UnaryFunction<boolean> | Pred, val: unknown): Maybe;
-declare function safe(pred: UnaryFunction<boolean> | Pred): (val: unknown) => Maybe;
+//TODO: Test this function
+declare function safe<T>(pred: UnaryFunction<boolean> | Pred, val: T): Maybe<T>;
+declare function safe<T>(pred: UnaryFunction<boolean> | Pred): (val: T) => Maybe<T>;
 
 export default safe;

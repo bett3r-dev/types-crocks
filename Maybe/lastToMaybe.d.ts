@@ -6,7 +6,8 @@ import Maybe from './Maybe';
  * lastToMaybe :: Last a -> Maybe a
  * lastToMaybe :: (a -> Last b) -> a -> Maybe b
  */
-declare function lastToMaybe(val: Last): Maybe;
-declare function lastToMaybe(fn: UnaryFunction<Last>): UnaryFunction<Maybe>;
+declare function lastToMaybe<T>(val: Last): Maybe<T>;
+//TODO: Test this function
+declare function lastToMaybe<T>(fn: UnaryFunction<Last>): UnaryFunction<Maybe<T>>;
 
 export default lastToMaybe;

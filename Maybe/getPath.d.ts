@@ -3,7 +3,8 @@ import Maybe from './Maybe';
 /**
  * getPath :: [ (String | Integer) ] -> a -> Maybe b
  */
-declare function getPath(path: ReadonlyArray<string | number>, val: object): Maybe;
-declare function getPath(path: ReadonlyArray<string | number>): (val: object) => Maybe;
+//TODO: Get path would work with arrays?
+declare function getPath<T>(path: ReadonlyArray<string | number>, val: T[]|Record<string, T>): Maybe<T>;
+declare function getPath<T>(path: ReadonlyArray<string | number>): (val: T[]|Record<string,T>) => Maybe<T>;
 
 export default getPath;

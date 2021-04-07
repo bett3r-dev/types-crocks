@@ -6,7 +6,7 @@ import Maybe from './Maybe';
  * firstToMaybe :: First a -> Maybe a
  * firstToMaybe :: (a -> First b) -> a -> Maybe b
  */
-declare function firstToMaybe(val: First): Maybe;
-declare function firstToMaybe(fn: UnaryFunction<First>): UnaryFunction<Maybe>;
+declare function firstToMaybe<T>(val: First): Maybe<T>;
+declare function firstToMaybe<T>(fn: UnaryFunction<First>): UnaryFunction<Maybe<T>>;
 
 export default firstToMaybe;
