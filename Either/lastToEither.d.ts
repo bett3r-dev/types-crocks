@@ -6,7 +6,8 @@ import Either from './Either';
  * lastToEither :: c -> Last a -> Either c a
  * lastToEither :: c -> (a -> Last b) -> a -> Either c a
  */
-declare function lastToEither(val: Last): Either;
-declare function lastToEither(fn: UnaryFunction<Last>): UnaryFunction<Either>;
+declare function lastToEither<T>(val: Last): Either<any, T>;
+//TODO: Test this function
+declare function lastToEither<T>(fn: UnaryFunction<Last>): UnaryFunction<Either<any, T>>;
 
 export default lastToEither;
