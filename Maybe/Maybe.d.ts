@@ -1,32 +1,38 @@
-import { NullaryFunction, UnaryFunction } from '../internal/index';
+import {
+    NullaryFunction,
+    UnaryFunction,
+    Functor,
+    Monad,
+    Applicative
+} from '../internal/index';
 
-declare interface Nothing extends Maybe {
-    (): Nothing;
+declare interface Nothing<T=undefined> extends Maybe<T> {
+    (): Nothing<T>;
 }
 
-declare interface Just extends Maybe {
-    (val: unknown): Just;
+declare interface Just<T> extends Maybe<T> {
+    (val: unknown): Just<T>;
 }
 
-declare function Maybe(val: unknown): Maybe;
+declare function Maybe<T>(val: T): Maybe<T>;
 
-declare class Maybe {
-    equals(val: unknown): boolean;
-    concat(val: Maybe): Maybe;
-    map(fn: UnaryFunction): Maybe;
-    alt(val: Maybe): Maybe;
-    ap(val: Maybe): Maybe;
-    sequence(val: unknown): any;
-    traverse(val: unknown): any;
-    chain(fn: UnaryFunction<Maybe>): Maybe;
-    coalesce(fn1: NullaryFunction, fn2: UnaryFunction): Maybe;
-    bichain(fn1: NullaryFunction<Maybe>, fn2: UnaryFunction<Maybe>): Maybe;
-    option(val: unknown): any;
-    either(fn1: NullaryFunction, fn2: UnaryFunction): any;
-    static of(val: unknown): Just;
+declare class Maybe<Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
+    map<T=Right>(fn: UnaryFunction<T>): Maybe<T>;
+    chain<T=Right>(fn: UnaryFunction<T,Maybe<T>>): Maybe<T>;
+    ap<T=Right>(val: Maybe<T>): Maybe<T>;
+    equals<T>(val: T): boolean;
+    concat<T=Right>(other: Maybe<T>): Maybe<T>;
+    alt<T=Right>(val: Maybe<T>): Maybe<T>;
+    coalesce<T=Right>(fn1: NullaryFunction, fn2: UnaryFunction): Maybe<T>;
+    bichain<T=Right>(fn1: NullaryFunction<Maybe<T>>, fn2: UnaryFunction<Maybe<T>>): Maybe<T>;
+    either<T=Right>(fn1: NullaryFunction, fn2: UnaryFunction<T>): T;
+    sequence(val: unknown): any; //TODO: Completar el tipo aca
+    traverse(val: unknown): any; //TODO: Completar el tipo aca
+    option<T=Right>(val: T): any; //TODO: Completar el tipo aca
+    static of<T>(val: T): Just<T>;
     static zero(): Nothing;
     static Nothing: (val: unknown) => Nothing;
-    static Just: (val: unknown) => Just;
+    static Just<T>(val: T): Just<T>;
 }
 
 export default Maybe;
