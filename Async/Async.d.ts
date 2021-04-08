@@ -20,8 +20,8 @@ declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applic
     bichain<L= Left, R= Right>(fn1: UnaryFunction<Async<L,R>>, fn2: UnaryFunction<Async<L,R>>): Async<L,R>;
     swap<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R,L>;
     race<L= Left, R= Right>(val: Async<L,R>): Async<L,R>;
-    fork<L= Left, R= Right>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>): any;
-    fork<L= Left, R= Right>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>, cancel: NullaryFunction): any;
+    fork<L= Left, R= Right>(reject: UnaryFunction<L,any>, resolve: UnaryFunction<R,any>): any;
+    fork<L= Left, R= Right>(reject: UnaryFunction<L,any>, resolve: UnaryFunction<R,any>, cancel: NullaryFunction): any;
     toPromise<R = Right>(): Promise<R>;
     valueOf(): boolean;
     static fromPromise<L=any,R=any>(fn: VariadicFunction<Promise<R>>): VariadicFunction<Async<L,R>>;
