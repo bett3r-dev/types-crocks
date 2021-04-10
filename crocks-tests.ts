@@ -8,7 +8,10 @@ const asyncValue1 = Async(() => 1);
 const asyncValue2 = Async(() => 2);
 const raceValue = race(asyncValue1, asyncValue2);
 
-raceValue.fork(noop, noop);
+raceValue
+    .map(x=>y=>x+y)
+        .ap(Async.of(4))
+    .fork(noop, noop);
 
 const eitherLeft = Either.Left(1);
 const eitherRight = Either.Right(2);

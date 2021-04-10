@@ -1,1 +1,1 @@
-export type UnaryFunction<V = any, R=V> = (arg: V) => R;
+export type UnaryFunction<R, V = any> = (arg: V) => R | UnaryFunction<R, V>;

@@ -7,7 +7,6 @@ import {
 } from '../internal/index';
 
 declare function Pair<F,S>(val1: F, val2: S): Pair<F,S>;
-
 declare class Pair<First,Second> implements Functor<Second>, Monad<Second>, Applicative<Second> {
     map<S=Second>(fn: UnaryFunction<S>): Pair<First,S>;
     chain<S=Second>(fn: (val: S) => Pair<First,S>): Pair<First,S>;
