@@ -22,6 +22,7 @@ declare class Either<Left, Right> implements Functor<Right>, Monad<Right>, Appli
     swap<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Either<L,R>;
     either<L=Left, R=Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): any;
     valueOf<R=Right>(): R;
+    type():string;
     static of<L,R=L>(val: R): Either<L, R>;
     static Left<L,R=any>(val: L): Either<L, R>;
     static Right<L,R=L>(val: R): Either<L, R>;

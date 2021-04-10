@@ -23,6 +23,7 @@ declare class Pair<First,Second> implements Functor<Second>, Monad<Second>, Appl
     snd<S=Second>(): S;
     toArray<F,S>(): [F, S];
     merge<F,S>(fn: BinaryFunction<any>): any;
+    type():string;
 }
 
 export default Pair;

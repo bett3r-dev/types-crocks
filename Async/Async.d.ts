@@ -24,6 +24,7 @@ declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applic
     fork<L= Left, R= Right>(reject: UnaryFunction<L,any>, resolve: UnaryFunction<R,any>, cancel: NullaryFunction): any;
     toPromise<R = Right>(): Promise<R>;
     valueOf(): boolean;
+    type():string;
     static fromPromise<L=any,R=any>(fn: VariadicFunction<Promise<R>>): VariadicFunction<Async<L,R>>;
     static fromNode<L=any,R=any>(fn: VariadicFunction<NodeCallback<R>>): VariadicFunction<Async<L,R>>;
     static all<L=any,R=any>(val: Async<L,R>[]): Async<L,R>;

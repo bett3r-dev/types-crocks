@@ -29,6 +29,7 @@ declare class Maybe<Right> implements Functor<Right>, Monad<Right>, Applicative<
     sequence(val: unknown): any; //TODO: Completar el tipo aca
     traverse(val: unknown): any; //TODO: Completar el tipo aca
     option<T=Right>(val: T): any; //TODO: Completar el tipo aca
+    type():string;
     static of<T>(val: T): Just<T>;
     static zero(): Nothing;
     static Nothing: (val: unknown) => Nothing;
