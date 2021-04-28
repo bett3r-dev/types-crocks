@@ -4,6 +4,6 @@ import Result from '../Result';
 /**
  * tryCatch :: ((*) -> b) -> (*) -> Result e b
  */
-declare function tryCatch(fn: VariadicFunction): VariadicFunction<Result>;
+declare function tryCatch<T>(fn: VariadicFunction<T>): VariadicFunction<Result<Error, T>>;
 
 export default tryCatch;
