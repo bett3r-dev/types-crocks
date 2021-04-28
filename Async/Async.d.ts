@@ -10,14 +10,11 @@ import {
 
 declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => R): Async<L,R>;
 
-export type asyncMapFunction<T, V=T> = (arg: V)=>T | asyncMapFunction<T, any>;
-export type asyncChainFunction<T, V=T> = (arg: V)=>T | asyncChainFunction<T, any>;
-
 declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
-    map<R = Right>(fn: asyncMapFunction<R>): Async<Left,R>;
-    chain<R= Right>(fn: UnaryFunction<Async<Left,R>, R>): Async<Left,R>;
+    map<R = Right>(fn: UnaryFunction<R>): Async<Left,R>;
+    chain<R= Right, RETURN=R>(fn: UnaryFunction<Async<Left,RETURN>, R>): Async<Left,RETURN>;
     bichain<L= Left, R= Right>(fn1: UnaryFunction<Async<L,R>, L>, fn2: UnaryFunction<Async<L,R>, R>): Async<L,R>;
-    ap<R= Right>(val: Async<Left,R>): Async<Left,R>;
+    ap(val: Async<Left,any>): Async<Left,Right>;
     alt<L = Left,R = Right>(val: Async<L,R>): Async<L,R>;
     bimap<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<L,R>;
     coalesce<L= Left, R= Right>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R,R>;
