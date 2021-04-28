@@ -5,27 +5,27 @@ import {
     Applicative
 } from '../internal/index';
 
-declare function Result<ERR, OK>(val: OK): Result<ERR,OK>;
+declare function Result<OK>(val: OK): Result<OK>;
 
-declare class Result<ERR, OK> implements Functor<OK>, Monad<OK>, Applicative<OK>  {
-    map<R = OK>(fn: UnaryFunction<R>): Result<ERR,R>;
-    chain<R= OK>(fn: UnaryFunction<Result<ERR,R>, R>): Result<ERR,R>;
-    bichain<L=ERR, R=OK>(fn1: UnaryFunction<Result<L,R>, L>, fn2: UnaryFunction<Result<L,R>, R>): Result<L,R>;
-    ap<R= OK>(val: Result<ERR,R>): Result<ERR,R>;
-    equals<R=OK>(val: R): boolean;
-    concat<R=OK>(other: Result<ERR, R>): Result<ERR, R>;
-    alt<R=OK>(other: Result<ERR, R>): Result<ERR, R>;
-    bimap<L=ERR, R=OK>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Result<L,R>;
+declare class Result<OK, ERR=Error> implements Functor<OK>, Monad<OK>, Applicative<OK>  {
+    map<R = OK>(fn: UnaryFunction<R>): Result<R, ERR>;
+    chain<R= OK>(fn: UnaryFunction<Result<R,ERR>, R>): Result<R,ERR>;
+    bichain<E=ERR, O=OK>(fn1: UnaryFunction<Result<O,E>, E>, fn2: UnaryFunction<Result<O,E>, O>): Result<O,E>;
+    ap<O= OK>(val: Result<O,ERR>): Result<O,ERR>;
+    equals<O=OK>(val: O): boolean;
+    concat<O=OK>(other: Result<O,ERR>): Result<O,ERR>;
+    alt<O=OK>(other: Result<O,ERR>): Result<O,ERR>;
+    bimap<E=ERR, O=OK>(fn1: UnaryFunction<E>, fn2: UnaryFunction<O>): Result<O,E>;
     sequence(val: unknown): any;//TODO: Completar el tipo aca
     traverse(val: unknown): any;//TODO: Completar el tipo aca
-    coalesce<L=ERR, R=OK>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Result<L,R>;
-    swap<L=ERR, R=OK>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Result<L,R>;
-    either<L=ERR, R=OK>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): any;
-    valueOf<R=OK>(): R;
+    coalesce<E=ERR, O=OK>(fn1: UnaryFunction<E>, fn2: UnaryFunction<O>): Result<O,E>;
+    swap<E=ERR, O=OK>(fn1: UnaryFunction<E>, fn2: UnaryFunction<O>): Result<O,E>;
+    either<E=ERR, O=OK>(fn1: UnaryFunction<E>, fn2: UnaryFunction<O>): any;
+    valueOf<O=OK>(): O;
     type():string;
-    static of<R>(val: R): Result<any, R>;
-    static Ok<L,R=any>(val: L): Result<L, R>;
-    static Err<L,R=L>(val: R): Result<L, R>;
+    static of<OK>(val: OK): Result<OK,Error>;
+    static Ok<O,E=Error>(val: O): Result<O,E>;
+    static Err(val: Error): Result<any,Error>;
 }
 
 export default Result;
