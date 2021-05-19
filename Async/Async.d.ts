@@ -1,5 +1,4 @@
 import {
-    NodeCallback,
     NullaryFunction,
     UnaryFunction,
     VariadicFunction,
