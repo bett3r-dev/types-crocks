@@ -1,5 +1,5 @@
 import { VariadicFunction } from '../internal/VariadicFunction';
-import Result from '../Result';
+import Result from '.';
 
 /**
  * tryCatch :: ((*) -> b) -> (*) -> Result e b

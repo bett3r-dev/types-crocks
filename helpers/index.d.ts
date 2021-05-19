@@ -32,7 +32,7 @@ export { default as pipeS } from './pipeS';
 export { default as setPath } from './setPath';
 export { default as setProp } from './setProp';
 export { default as tap } from './tap';
-export { default as tryCatch } from './tryCatch';
+export { default as tryCatch } from '../Result/tryCatch';
 export { default as unary } from './unary';
 export { default as unit } from './unit';
 export { default as unsetPath } from './unsetPath';
