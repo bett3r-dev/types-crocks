@@ -1,1 +1,1 @@
-export type VariadicFunction<R = any> = (...args: ReadonlyArray<any>) => R;
+export type VariadicFunction<R = any> = (...args: Array<any>) => R;
