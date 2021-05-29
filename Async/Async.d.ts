@@ -10,8 +10,8 @@ import {
 declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => R): Async<L,R>;
 
 declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
-    map<R = Right>(fn: UnaryFunction<R>): Async<Left,R>;
-    chain<R= Right, RETURN=R>(fn: UnaryFunction<Async<Left,RETURN>, R>): Async<Left,RETURN>;
+    map<RETURN=Right, R=Right>(fn: UnaryFunction<RETURN,R>): Async<Left,R>;
+    chain<RETURN=Right, R=Right>(fn: UnaryFunction<Async<Left,RETURN>, R>): Async<Left,RETURN>;
     bichain<L= Left, R= Right>(fn1: UnaryFunction<Async<L,R>, L>, fn2: UnaryFunction<Async<L,R>, R>): Async<L,R>;
     ap(val: Async<Left,any>): Async<Left,Right>;
     alt<L = Left,R = Right>(val: Async<L,R>): Async<L,R>;
