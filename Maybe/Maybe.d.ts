@@ -17,8 +17,8 @@ declare interface Just<T> extends Maybe<T> {
 declare function Maybe<T>(val: T): Maybe<T>;
 
 declare class Maybe<Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
-    map<T=Right>(fn: UnaryFunction<T>): Maybe<T>;
-    chain<T=Right>(fn: UnaryFunction<Maybe<T>,T>): Maybe<T>;
+    map<RETURN=Right, R=Right>(fn: UnaryFunction<RETURN,R>): Maybe<R>;
+    chain<RETURN=Right, R=Right>(fn: UnaryFunction<Maybe<RETURN>, R>): Maybe<RETURN>;
     bichain<T=Right>(fn1: NullaryFunction<Maybe<T>>, fn2: UnaryFunction<Maybe<T>, T>): Maybe<T>;
     ap<T=Right>(val: Maybe<T>): Maybe<T>;
     equals<T>(val: T): boolean;
