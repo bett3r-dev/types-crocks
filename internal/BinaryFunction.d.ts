@@ -1,4 +1,4 @@
-type CurriedBinaryFunctionI<R = any> = (arg1: unknown, arg2: unknown) => R;
-type CurriedBinaryFunctionII<R = any> = (arg1: unknown) => (arg2: unknown) => R;
+type CurriedBinaryFunctionI<L= any, R = any, RETURN = R> = (arg1: L, arg2: R) => RETURN;
+type CurriedBinaryFunctionII<L= any, R = any, RETURN = R> = (arg1: L) => (arg2: R) => RETURN;
 
-export type BinaryFunction<R = any> = CurriedBinaryFunctionI<R> | CurriedBinaryFunctionII<R>;
+export type BinaryFunction<L= any, R = any, RETURN = R> = CurriedBinaryFunctionI<L,R, RETURN> | CurriedBinaryFunctionII<L,R, RETURN>;
