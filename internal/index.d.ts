@@ -14,6 +14,15 @@ export interface Monoid<T>{
     '@@type': () => string;
 }
 
+export interface MonoidInstance<T> {
+    valueOf: () => T
+    equals: (otherMonoid: MonoidInstance<T>) => boolean
+    concat: (otherMonoid: MonoidInstance<T>) => MonoidInstance<T>
+    empty: () => MonoidInstance<T>
+    inspect: () => string
+    [key:string]: any
+}
+
 export type mapFunction<T> = (arg: any)=>T | mapFunction<T>;
 export declare interface Functor<T>{
     map(fn: mapFunction<T>): Functor<T>;
