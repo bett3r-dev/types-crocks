@@ -6,6 +6,14 @@ export * from './TernaryFunction';
 export * from './UnaryFunction';
 export * from './VariadicFunction';
 
+export interface Monoid<T>{
+    (initial?: T): MonoidInstance<T>;
+    '@@implements': (test: string) => boolean;
+    empty: () => MonoidInstance<T>;
+    type: () => string;
+    '@@type': () => string;
+}
+
 export type mapFunction<T> = (arg: any)=>T | mapFunction<T>;
 export declare interface Functor<T>{
     map(fn: mapFunction<T>): Functor<T>;
