@@ -8,9 +8,16 @@ const asyncValue1 = Async(() => 1);
 const asyncValue2 = Async(() => 2);
 const raceValue = race(asyncValue1, asyncValue2);
 
-raceValue
-    .map(x=>y=>x+y)
-        .ap(Async.of(4))
+type applicative = (y:string) => (z:boolean) => (a:number) => number
+
+asyncValue1
+    .map(x=> x+1)
+    .map<applicative>((x:number) => (y:string) => (z:boolean) => (a:number) => 2)
+        .ap(Async.of('asdf'))
+        .ap(Async.of(true))
+        .ap(Async.of(34))
+    .chain(x => Async.of('ásdf'))
+    .map(x => x)
     .fork(noop, noop);
 
 const eitherLeft = Either.Left(1);
