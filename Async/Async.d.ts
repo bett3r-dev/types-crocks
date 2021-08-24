@@ -7,7 +7,7 @@ import {
     Applicative
 } from '../internal/index';
 
-declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => R): Async<L,R>;
+declare function Async<L, R = any>(fn: (reject: UnaryFunction<L>, resolve: UnaryFunction<R>) => void): Async<L,R>;
 
 declare class Async<Left, Right> implements Functor<Right>, Monad<Right>, Applicative<Right> {
     map<RETURN=Right, R=Right>(fn: UnaryFunction<RETURN,R>): Async<Left,R>;
