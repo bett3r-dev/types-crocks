@@ -1,6 +1,7 @@
 import Async from './Async';
-import race from './Async/race';
 import Either from './Either';
+import Reader from './Reader';
+import race from './Async/race';
 
 const noop = () => {};
 
