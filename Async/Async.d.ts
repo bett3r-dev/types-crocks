@@ -11,14 +11,14 @@ declare function Async<R = any, L = Error>(fn: (reject: UnaryFunction<L>, resolv
 
 declare class Async<Right = any, Left = Error> implements Functor<Right>, Monad<Right>, Applicative<Right> {
     map<RETURN=Right, R=Right>(fn: UnaryFunction<RETURN,R>): Async<R, Left>;
-    chain<RETURN=Right, R=Right>(fn: UnaryFunction<Async<Left,RETURN>, R>): Async<RETURN, Left>;
-    bichain<R= Right, L= Left>(fn1: UnaryFunction<Async<L,R>, L>, fn2: UnaryFunction<Async<L,R>, R>): Async<R,L>;
+    chain<RETURN=Right, R=Right>(fn: UnaryFunction<Async<RETURN, Left>, R>): Async<RETURN, Left>;
+    bichain<R= Right, L= Left>(fn1: UnaryFunction<Async<R,L>, L>, fn2: UnaryFunction<Async<R,L>, R>): Async<R,L>;
     ap(val: Async): Async<Right, Left>;
-    alt<R= Right, L= Left>(val: Async<L,R>): Async<R,L>;
+    alt<R= Right, L= Left>(val: Async<R,L>): Async<R,L>;
     bimap<R= Right, L= Left>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R, L>;
     coalesce<R= Right, L= Left>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<R,R>;
     swap<R= Right, L= Left>(fn1: UnaryFunction<L>, fn2: UnaryFunction<R>): Async<L,R>;
-    race<R= Right, L= Left>(val: Async<L,R>): Async<R,L>;
+    race<R= Right, L= Left>(val: Async<R,L>): Async<R,L>;
     fork<R= Right, L= Left>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>): any;
     fork<R= Right, L= Left>(reject: UnaryFunction<L>, resolve: UnaryFunction<R>, cancel: NullaryFunction): any;
     toPromise<R = Right>(): Promise<R>;
