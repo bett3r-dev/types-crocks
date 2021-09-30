@@ -26,12 +26,11 @@ declare class Async<Right = any, Left = Error> implements Functor<Right>, Monad<
     type():string;
     static fromPromise<R>(fn: VariadicFunction<Promise<R>>): VariadicFunction<Async<R>>;
     static fromNode<R=any, L=Error,>(fn: Function): VariadicFunction<Async<R,L>>;
-    static all<R,L>(val: Async[]): Async<R,L>;
+    static all(val: Async[]): Async;
     static resolveAfter<R>(delay: number, val: R): Async<R>;
     static rejectAfter<R=any, L=Error>(delay: number, val: L): Async<R, L>;
     static of<R>(val: R): Async<R>;
     static Rejected<R=any, L=Error>(val: L): Async<R, L>;
     static Resolved<R>(val: R): Async<R>;
 }
-
 export default Async;
