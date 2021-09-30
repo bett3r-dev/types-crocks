@@ -13,7 +13,7 @@ declare class Reader<R, ENV> implements Functor<R>, Monad<R>, Applicative<R>  {
   ap<O= R>(val: Reader<O,ENV>): Reader<O,ENV>;
   runWith<E = ENV>(env: E): Reader<R, E>;
   type():string;
-  static of<R>(val: R): Reader<R, unknown>;
+  static of<R, ENV = any>(val: R): Reader<R, ENV>;
   static ask<R, ENV>(fn?: (env: ENV) => R): Reader<R, ENV>;
 }
 
